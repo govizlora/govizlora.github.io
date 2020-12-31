@@ -57,7 +57,7 @@ async function init(e) {
     ).then(mediaStream => {
         document.querySelector('video').srcObject = mediaStream;
         e.target.disabled = true;
-    }).catch(handleError)
+    }).catch(e => { handleError(e) })
 }
 
 document.querySelector('#showVideo').addEventListener('click', e => init(e));
