@@ -44,20 +44,23 @@ function errorMsg(msg, error) {
 }
 
 async function init(e) {
-    navigator.mediaDevices.getUserMedia(
-        {
-            audio: false,
-            video: {
-                facingMode: "environment",
-                // Use a big enough resolution to get the native resolution
-                width: { ideal: 7680 },
-                height: { ideal: 4320 }
+    try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia(
+            {
+                audio: false,
+                video: {
+                    facingMode: "environment",
+                    // Use a big enough resolution to get the native resolution
+                    width: { ideal: 7680 },
+                    height: { ideal: 4320 }
+                }
             }
-        }
-    ).then(mediaStream => {
+        )
         document.querySelector('video').srcObject = mediaStream;
         e.target.disabled = true;
-    }).catch(e => { handleError(e) })
+    } catch (err) {
+        handleError(err);
+    }
 }
 
 document.querySelector('#showVideo').addEventListener('click', e => init(e));
